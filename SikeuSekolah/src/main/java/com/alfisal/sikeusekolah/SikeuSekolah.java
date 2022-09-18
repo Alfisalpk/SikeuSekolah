@@ -6,16 +6,26 @@
 package com.alfisal.sikeusekolah;
 import com.alfisal.sikeusekolah.form.DialogLogin;
 import com.alfisal.sikeusekolah.form.FormUtama;
-
+import java.sql.SQLException;
 /**
  *
  * @author ALFISAL-PUNJUNG
  */
 public class SikeuSekolah {
+    public static FormUtama tampilanUtama;
+    public static DialogLogin tampilanLogin;
+    
     public static void main(String[] args) {
 System.out.println("Menjalankan aplikasi SIKEU - Sekolah");
-FormUtama tampilanUtama = new FormUtama();
-DialogLogin tampilanLogin = new DialogLogin(tampilanUtama,true);
+Koneksi cek = new Koneksi();
+try{
+    cek.konekDB.close(); // tutup koneksi
+    
+} catch (SQLException ex) {
+}
+
+tampilanUtama = new FormUtama();
+tampilanLogin = new DialogLogin(tampilanUtama,true);
 tampilanLogin.setVisible(true);
 }
     
