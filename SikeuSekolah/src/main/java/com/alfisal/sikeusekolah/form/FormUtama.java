@@ -4,19 +4,24 @@
  */
 package com.alfisal.sikeusekolah.form;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author ALFISAL-PUNJUNG
  */
 public class FormUtama extends javax.swing.JFrame {
-
+    FormAkun FormAkun =new FormAkun();
     /**
      * Creates new form FormUtama
      */
     public FormUtama() {
         initComponents();
+        //fullscreen
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        desktopPane.add(FormAkun);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,11 +38,15 @@ public class FormUtama extends javax.swing.JFrame {
         saveMenuItem = new javax.swing.JMenuItem();
         saveAsMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
-        editMenu = new javax.swing.JMenu();
-        cutMenuItem = new javax.swing.JMenuItem();
-        copyMenuItem = new javax.swing.JMenuItem();
-        pasteMenuItem = new javax.swing.JMenuItem();
-        deleteMenuItem = new javax.swing.JMenuItem();
+        menuMaster = new javax.swing.JMenu();
+        menuMasterAkun = new javax.swing.JMenuItem();
+        menuMasterJurusan = new javax.swing.JMenuItem();
+        menuMaterJurusan = new javax.swing.JMenuItem();
+        menuMaterKelas = new javax.swing.JMenuItem();
+        menuMaterSiswa = new javax.swing.JMenuItem();
+        menuMaterBiayaTetap = new javax.swing.JMenuItem();
+        menuMaterBiayaPmb = new javax.swing.JMenuItem();
+        menuMaterBiayaLain = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         contentMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
@@ -71,26 +80,78 @@ public class FormUtama extends javax.swing.JFrame {
 
         menuBar.add(fileMenu);
 
-        editMenu.setMnemonic('e');
-        editMenu.setText("Edit");
+        menuMaster.setMnemonic('e');
+        menuMaster.setText("Master");
 
-        cutMenuItem.setMnemonic('t');
-        cutMenuItem.setText("Cut");
-        editMenu.add(cutMenuItem);
+        menuMasterAkun.setMnemonic('t');
+        menuMasterAkun.setText("Akun");
+        menuMasterAkun.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuMasterAkunActionPerformed(evt);
+            }
+        });
+        menuMaster.add(menuMasterAkun);
 
-        copyMenuItem.setMnemonic('y');
-        copyMenuItem.setText("Copy");
-        editMenu.add(copyMenuItem);
+        menuMasterJurusan.setMnemonic('y');
+        menuMasterJurusan.setText("Angkatan");
+        menuMasterJurusan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuMasterJurusanActionPerformed(evt);
+            }
+        });
+        menuMaster.add(menuMasterJurusan);
 
-        pasteMenuItem.setMnemonic('p');
-        pasteMenuItem.setText("Paste");
-        editMenu.add(pasteMenuItem);
+        menuMaterJurusan.setMnemonic('p');
+        menuMaterJurusan.setText("Jurusan");
+        menuMaterJurusan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuMaterJurusanActionPerformed(evt);
+            }
+        });
+        menuMaster.add(menuMaterJurusan);
 
-        deleteMenuItem.setMnemonic('d');
-        deleteMenuItem.setText("Delete");
-        editMenu.add(deleteMenuItem);
+        menuMaterKelas.setMnemonic('d');
+        menuMaterKelas.setText("Kelas");
+        menuMaterKelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuMaterKelasActionPerformed(evt);
+            }
+        });
+        menuMaster.add(menuMaterKelas);
 
-        menuBar.add(editMenu);
+        menuMaterSiswa.setText("Siswa");
+        menuMaterSiswa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuMaterSiswaActionPerformed(evt);
+            }
+        });
+        menuMaster.add(menuMaterSiswa);
+
+        menuMaterBiayaTetap.setText("Biaya Tetap");
+        menuMaterBiayaTetap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuMaterBiayaTetapActionPerformed(evt);
+            }
+        });
+        menuMaster.add(menuMaterBiayaTetap);
+
+        menuMaterBiayaPmb.setText("Biaya PMB");
+        menuMaterBiayaPmb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuMaterBiayaPmbActionPerformed(evt);
+            }
+        });
+        menuMaster.add(menuMaterBiayaPmb);
+
+        menuMaterBiayaLain.setText("Biaya Lain");
+        menuMaterBiayaLain.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuMaterBiayaLainActionPerformed(evt);
+            }
+        });
+        menuMaster.add(menuMaterBiayaLain);
+
+        menuBar.add(menuMaster);
 
         helpMenu.setMnemonic('h');
         helpMenu.setText("Help");
@@ -111,11 +172,17 @@ public class FormUtama extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1108, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -124,6 +191,79 @@ public class FormUtama extends javax.swing.JFrame {
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
+
+    private void menuMasterAkunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMasterAkunActionPerformed
+        desktopPane.removeAll();
+        desktopPane.repaint();
+        FormAkun formAkun=new FormAkun();
+        desktopPane.add(formAkun);
+        formAkun.setVisible(true);
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuMasterAkunActionPerformed
+
+    private void menuMasterJurusanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMasterJurusanActionPerformed
+        // TODO add your handling code here:
+        desktopPane.removeAll();
+        desktopPane.repaint();
+        FormAngkatan formAngkatan=new FormAngkatan();
+        desktopPane.add(formAngkatan);
+        formAngkatan.setVisible(true);
+    }//GEN-LAST:event_menuMasterJurusanActionPerformed
+
+    private void menuMaterJurusanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMaterJurusanActionPerformed
+        // TODO add your handling code here:
+        desktopPane.removeAll();
+        desktopPane.repaint();
+        FormJurusan formJurusan=new FormJurusan();
+        desktopPane.add(formJurusan);
+        formJurusan.setVisible(true);
+    }//GEN-LAST:event_menuMaterJurusanActionPerformed
+
+    private void menuMaterKelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMaterKelasActionPerformed
+        // TODO add your handling code here:
+        desktopPane.removeAll();
+        desktopPane.repaint();
+        FormKelas formKelas=new FormKelas();
+        desktopPane.add(formKelas);
+        formKelas.setVisible(true);
+    }//GEN-LAST:event_menuMaterKelasActionPerformed
+
+    private void menuMaterSiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMaterSiswaActionPerformed
+        // TODO add your handling code here:
+         desktopPane.removeAll();
+        desktopPane.repaint();
+        FormSiswa formSiswa=new FormSiswa();
+        desktopPane.add(formSiswa);
+        formSiswa.setVisible(true);
+    }//GEN-LAST:event_menuMaterSiswaActionPerformed
+
+    private void menuMaterBiayaTetapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMaterBiayaTetapActionPerformed
+        // TODO add your handling code here:
+        desktopPane.removeAll();
+        desktopPane.repaint();
+        FormBiayaTetap formBiayaTetap=new FormBiayaTetap();
+        desktopPane.add(formBiayaTetap);
+        formBiayaTetap.setVisible(true);
+    }//GEN-LAST:event_menuMaterBiayaTetapActionPerformed
+
+    private void menuMaterBiayaPmbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMaterBiayaPmbActionPerformed
+        // TODO add your handling code here:
+        desktopPane.removeAll();
+        desktopPane.repaint();
+        FormBiayaPmb formBiayaPmb=new FormBiayaPmb();
+        desktopPane.add(formBiayaPmb);
+        formBiayaPmb.setVisible(true);
+    }//GEN-LAST:event_menuMaterBiayaPmbActionPerformed
+
+    private void menuMaterBiayaLainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMaterBiayaLainActionPerformed
+        // TODO add your handling code here:
+        desktopPane.removeAll();
+        desktopPane.repaint();
+        FormBiayaLain formBiayaLain=new FormBiayaLain();
+        desktopPane.add(formBiayaLain);
+        formBiayaLain.setVisible(true);
+    }//GEN-LAST:event_menuMaterBiayaLainActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,17 +303,21 @@ public class FormUtama extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenuItem contentMenuItem;
-    private javax.swing.JMenuItem copyMenuItem;
-    private javax.swing.JMenuItem cutMenuItem;
-    private javax.swing.JMenuItem deleteMenuItem;
     private javax.swing.JDesktopPane desktopPane;
-    private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenu menuMaster;
+    private javax.swing.JMenuItem menuMasterAkun;
+    private javax.swing.JMenuItem menuMasterJurusan;
+    private javax.swing.JMenuItem menuMaterBiayaLain;
+    private javax.swing.JMenuItem menuMaterBiayaPmb;
+    private javax.swing.JMenuItem menuMaterBiayaTetap;
+    private javax.swing.JMenuItem menuMaterJurusan;
+    private javax.swing.JMenuItem menuMaterKelas;
+    private javax.swing.JMenuItem menuMaterSiswa;
     private javax.swing.JMenuItem openMenuItem;
-    private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
     // End of variables declaration//GEN-END:variables
