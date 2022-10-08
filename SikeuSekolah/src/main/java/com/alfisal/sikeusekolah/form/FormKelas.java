@@ -113,6 +113,12 @@ public void cbjurusan(){
 
         jLabel5.setText("Jurusan");
 
+        cbjurusan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbjurusanActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout dialogFormLayout = new javax.swing.GroupLayout(dialogForm.getContentPane());
         dialogForm.getContentPane().setLayout(dialogFormLayout);
         dialogFormLayout.setHorizontalGroup(
@@ -355,6 +361,10 @@ public void cbjurusan(){
     private void kode_kelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kode_kelasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_kode_kelasActionPerformed
+
+    private void cbjurusanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbjurusanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbjurusanActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

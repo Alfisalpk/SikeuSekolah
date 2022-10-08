@@ -25,7 +25,49 @@ String mode;
         initComponents();
         kon = new Koneksi();
         tampilData("");
+        cbakun_id();
+        cbtahun_angkatan();
+        cbjurusan();
     }
+    public void cbjurusan(){
+     try{
+         String sql="select * from jurusan";
+         rs = kon.perintah.executeQuery(sql);
+         cbjurusan.addItem("-Pilih Jurusan-");
+         while (rs.next()) {
+             cbjurusan.addItem(rs.getString("id"));
+         }
+        }catch(Exception e){
+            System.err.println("Gagal Tampil data: "+e.getMessage());
+       }
+    }
+    public void cbakun_id(){
+     try{
+         String sql="select * from biaya_tetap";
+         rs = kon.perintah.executeQuery(sql);
+         cbakun_id.addItem("-Pilih Jurusan-");
+         while (rs.next()) {
+             cbakun_id.addItem(rs.getString("akun_id"));
+         }
+        }catch(Exception e){
+            System.err.println("Gagal Tampil data: "+e.getMessage());
+       }
+    }
+    public void cbtahun_angkatan(){
+     try{
+         String sql="select * from angkatan";
+         rs = kon.perintah.executeQuery(sql);
+         cbtahun_angkatan.addItem("-Pilih Jurusan-");
+         while (rs.next()) {
+             cbtahun_angkatan.addItem(rs.getString("tahun"));
+         }
+        }catch(Exception e){
+            System.err.println("Gagal Tampil data: "+e.getMessage());
+       }
+    }
+    
+    
+    
 private void tampilData(String filter){
     Object[] judulKolom = {"No","ID","Akun ID","Nama Biaya","Jumlah","Tahun Angkatan","Gelombang","Jurusan"};
     DefaultTableModel modelAkun= new DefaultTableModel(null, judulKolom);
@@ -66,18 +108,18 @@ private void tampilData(String filter){
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         id = new javax.swing.JTextField();
-        akun_id = new javax.swing.JTextField();
         simpan = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        nama_biaya = new javax.swing.JTextField();
         jumlah = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         gelombang = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        tahun_angkatan = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jurusan = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
+        cbjurusan = new javax.swing.JComboBox<>();
+        cbakun_id = new javax.swing.JComboBox<>();
+        nama_biaya = new javax.swing.JTextField();
+        cbtahun_angkatan = new javax.swing.JComboBox<>();
         tambah = new javax.swing.JButton();
         ubah = new javax.swing.JButton();
         hapus = new javax.swing.JButton();
@@ -113,25 +155,37 @@ private void tampilData(String filter){
 
         jLabel5.setText("Jumlah");
 
+        jLabel6.setText("Nama Biaya");
+
+        jLabel7.setText("Tahun Angkatan");
+
+        jLabel8.setText("Gelombang");
+
+        jLabel9.setText("Jurusan");
+
+        cbjurusan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbjurusanActionPerformed(evt);
+            }
+        });
+
+        cbakun_id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbakun_idActionPerformed(evt);
+            }
+        });
+
         nama_biaya.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nama_biayaActionPerformed(evt);
             }
         });
 
-        jLabel6.setText("Nama Biaya");
-
-        jLabel7.setText("Tahun Angkatan");
-
-        tahun_angkatan.addActionListener(new java.awt.event.ActionListener() {
+        cbtahun_angkatan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tahun_angkatanActionPerformed(evt);
+                cbtahun_angkatanActionPerformed(evt);
             }
         });
-
-        jLabel8.setText("Gelombang");
-
-        jLabel9.setText("Jurusan");
 
         javax.swing.GroupLayout dialogFormLayout = new javax.swing.GroupLayout(dialogForm.getContentPane());
         dialogForm.getContentPane().setLayout(dialogFormLayout);
@@ -149,18 +203,16 @@ private void tampilData(String filter){
                             .addComponent(jLabel2)
                             .addComponent(jLabel6)
                             .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
-                        .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(id)
-                                .addComponent(akun_id)
-                                .addComponent(nama_biaya, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(gelombang, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
-                                .addComponent(tahun_angkatan, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jurusan, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jumlah)))
-                        .addGap(0, 45, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(id, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                            .addComponent(gelombang, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                            .addComponent(jumlah)
+                            .addComponent(cbjurusan, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbakun_id, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(nama_biaya, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                            .addComponent(cbtahun_angkatan, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 57, Short.MAX_VALUE))
                     .addComponent(simpan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -168,9 +220,6 @@ private void tampilData(String filter){
             dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dialogFormLayout.createSequentialGroup()
                 .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(dialogFormLayout.createSequentialGroup()
-                        .addGap(93, 93, 93)
-                        .addComponent(jLabel6))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogFormLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -178,32 +227,36 @@ private void tampilData(String filter){
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(akun_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nama_biaya, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel3)
+                            .addComponent(cbakun_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(31, 31, 31))
+                    .addGroup(dialogFormLayout.createSequentialGroup()
+                        .addGap(90, 90, 90)
+                        .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(nama_biaya, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(dialogFormLayout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel7))
+                        .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(cbtahun_angkatan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(dialogFormLayout.createSequentialGroup()
                         .addComponent(jumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)
-                        .addComponent(tahun_angkatan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(43, 43, 43)
                         .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(gelombang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jurusan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9))))
+                        .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(cbjurusan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addComponent(simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         setClosable(true);
@@ -383,12 +436,12 @@ private void tampilData(String filter){
     private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
         // TODO add your handling code here:
         String txtId = id.getText();
-        String txtAkun_id = akun_id.getText();
+        String txtAkun_id = String.valueOf(cbakun_id.getSelectedItem());
         String txtNama_biaya = nama_biaya.getText();
         String txtJumlah = jumlah.getText();
-        String txtTahun_angkatan = tahun_angkatan.getText();
+        String txtTahun_angkatan = String.valueOf(cbtahun_angkatan.getSelectedItem());
         String txtGelombang= gelombang.getText();
-        String txtJurusan = jurusan.getText();
+        String txtJurusan = String.valueOf(cbjurusan.getSelectedItem());
         
         String sql= "";
 
@@ -434,14 +487,13 @@ private void tampilData(String filter){
     private void tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahActionPerformed
         // TODO add your handling code here:
         mode="tambah";
-        akun_id.setText(null);
+        cbakun_id.setSelectedItem(null);
   
-        akun_id.setText(null);
         nama_biaya.setText(null);
         jumlah.setText(null);
-        tahun_angkatan.setText(null);
+        cbtahun_angkatan.setSelectedItem(null);
         gelombang.setText(null);
-        jurusan.setText(null);
+        cbjurusan.setSelectedItem(null);
         
         id.setEnabled(true);
         dialogForm.setTitle("Form Biaya PMB - Tambah");
@@ -471,12 +523,12 @@ private void tampilData(String filter){
                     String txtJurusan =rs.getString("jurusan");
                     
                     id.setText(txtId);
-                    akun_id.setText(txtAkun_id);
+                    cbakun_id.setSelectedItem(txtAkun_id);
                     nama_biaya.setText(txtNama_biaya);
                     jumlah.setText(txtJumlah);
-                    tahun_angkatan.setText(txtTahun_angkatan);
+                    cbtahun_angkatan.setSelectedItem(txtTahun_angkatan);
                     gelombang.setText(txtGelombang);
-                    jurusan.setText(txtJurusan);
+                    cbjurusan.setSelectedItem(txtJurusan);
                     
 
                     id.setEnabled(false);
@@ -539,19 +591,29 @@ private void tampilData(String filter){
         // TODO add your handling code here:
     }//GEN-LAST:event_Cari1ActionPerformed
 
+    private void cbjurusanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbjurusanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbjurusanActionPerformed
+
+    private void cbakun_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbakun_idActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbakun_idActionPerformed
+
     private void nama_biayaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nama_biayaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nama_biayaActionPerformed
 
-    private void tahun_angkatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tahun_angkatanActionPerformed
+    private void cbtahun_angkatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbtahun_angkatanActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tahun_angkatanActionPerformed
+    }//GEN-LAST:event_cbtahun_angkatanActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Cari;
     private javax.swing.JTextField Cari1;
-    private javax.swing.JTextField akun_id;
+    private javax.swing.JComboBox<String> cbakun_id;
+    private javax.swing.JComboBox<String> cbjurusan;
+    private javax.swing.JComboBox<String> cbtahun_angkatan;
     private javax.swing.JDialog dialogForm;
     private javax.swing.JTextField gelombang;
     private javax.swing.JButton hapus;
@@ -570,12 +632,10 @@ private void tampilData(String filter){
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jumlah;
-    private javax.swing.JTextField jurusan;
     private javax.swing.JTextField nama_biaya;
     private javax.swing.JButton simpan;
     private javax.swing.JTable tabelData;
     private javax.swing.JTable tabelData1;
-    private javax.swing.JTextField tahun_angkatan;
     private javax.swing.JButton tambah;
     private javax.swing.JButton tambah1;
     private javax.swing.JButton ubah;

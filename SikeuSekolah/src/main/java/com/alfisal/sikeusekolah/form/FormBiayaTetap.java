@@ -25,7 +25,37 @@ String mode;
         initComponents();
         kon = new Koneksi();
         tampilData("");
+        cbjurusan();
+        cbangkatan();
     }
+    
+    public void cbjurusan(){
+     try{
+         String sql="select * from jurusan";
+         rs = kon.perintah.executeQuery(sql);
+         cbjurusan.addItem("-Pilih Jurusan-");
+         while (rs.next()) {
+             cbjurusan.addItem(rs.getString("id"));
+         }
+        }catch(Exception e){
+            System.err.println("Gagal Tampil data: "+e.getMessage());
+       }
+    }
+    
+    public void cbangkatan(){
+     try{
+         String sql="select * from angkatan";
+         rs = kon.perintah.executeQuery(sql);
+         cbangkatan.addItem("-Pilih Jurusan-");
+         while (rs.next()) {
+             cbangkatan.addItem(rs.getString("tahun"));
+         }
+        }catch(Exception e){
+            System.err.println("Gagal Tampil data: "+e.getMessage());
+       }
+    }
+    
+    
 private void tampilData(String filter){
     Object[] judulKolom = {"No","ID","Akun ID","Nama Biaya","Jumlah","Jurusan","SMT","Tahun Angkatan"};
     DefaultTableModel modelAkun= new DefaultTableModel(null, judulKolom);
@@ -54,6 +84,7 @@ private void tampilData(String filter){
         System.err.println("Gagal Tampil dat : "+salahe.getMessage());
     }
 }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -74,11 +105,11 @@ private void tampilData(String filter){
         jLabel6 = new javax.swing.JLabel();
         smt = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jurusan = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        tahun_angkatan = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         simpan = new javax.swing.JButton();
+        cbjurusan = new javax.swing.JComboBox<>();
+        cbangkatan = new javax.swing.JComboBox<>();
         tambah = new javax.swing.JButton();
         ubah = new javax.swing.JButton();
         hapus = new javax.swing.JButton();
@@ -117,12 +148,6 @@ private void tampilData(String filter){
 
         jLabel7.setText("Jurusan");
 
-        jurusan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jurusanActionPerformed(evt);
-            }
-        });
-
         jLabel8.setText("Smt");
 
         jLabel9.setText("Tahun Angkatan");
@@ -131,6 +156,18 @@ private void tampilData(String filter){
         simpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 simpanActionPerformed(evt);
+            }
+        });
+
+        cbjurusan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbjurusanActionPerformed(evt);
+            }
+        });
+
+        cbangkatan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbangkatanActionPerformed(evt);
             }
         });
 
@@ -162,9 +199,9 @@ private void tampilData(String filter){
                                 .addGap(18, 18, 18)
                                 .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(smt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
-                                    .addComponent(jurusan, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tahun_angkatan, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jumlah)))))
+                                    .addComponent(jumlah)
+                                    .addComponent(cbjurusan, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbangkatan, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(dialogFormLayout.createSequentialGroup()
                         .addGap(121, 121, 121)
                         .addComponent(simpan)))
@@ -194,18 +231,21 @@ private void tampilData(String filter){
                     .addGroup(dialogFormLayout.createSequentialGroup()
                         .addComponent(jumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(9, 9, 9)
-                        .addComponent(jurusan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbjurusan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(smt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tahun_angkatan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9))))
-                .addGap(28, 28, 28)
+                        .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(dialogFormLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel9))
+                            .addGroup(dialogFormLayout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addComponent(cbangkatan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(simpan)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
 
         setClosable(true);
@@ -389,9 +429,9 @@ private void tampilData(String filter){
         akun_id.setText(null);
         nama_biaya.setText(null);
         jumlah.setText(null);
-        jurusan.setText(null);
+        cbjurusan.setSelectedItem(null);
         smt.setText(null);
-        tahun_angkatan.setText(null);
+        cbangkatan.setSelectedItem(null);
         id.setEnabled(true);
         dialogForm.setTitle("Form Biaya Tetap - Tambah");
         dialogForm.pack();
@@ -417,15 +457,15 @@ private void tampilData(String filter){
                     String txtJumlah =rs.getString("jumlah");
                     String txtJurusan =rs.getString("jurusan");
                     String txtSmt =rs.getString("smt");
-                    String txtTahun_angkatan =rs.getString("tahun_angkatan");
+                    String txtTahunAngkatan =rs.getString("tahun_angkatan");
                     
                     id.setText(txtId);
                     akun_id.setText(txtAkun_id);
                     nama_biaya.setText(txtNama_biaya);
                     jumlah.setText(txtJumlah);
-                    jurusan.setText(txtJurusan);
+                    cbjurusan.setSelectedItem(txtJurusan);
                     smt.setText(txtSmt);
-                    tahun_angkatan.setText(txtTahun_angkatan);
+                    cbangkatan.setSelectedItem(txtTahunAngkatan);
                     
 
                     id.setEnabled(false);
@@ -492,19 +532,15 @@ private void tampilData(String filter){
         // TODO add your handling code here:
     }//GEN-LAST:event_nama_biayaActionPerformed
 
-    private void jurusanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jurusanActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jurusanActionPerformed
-
     private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
         // TODO add your handling code here:
         String txtId = id.getText();
         String txtAkunID = akun_id.getText(); 
         String txtNamaBiaya = nama_biaya.getText(); 
         String txtJumlah = jumlah.getText(); 
-        String txtJurusan = jurusan.getText(); 
+         String txtJurusan = String.valueOf(cbjurusan.getSelectedItem());
         String txtSmt = smt.getText(); 
-        String txtTahunAngkatan = tahun_angkatan.getText(); 
+        String txtTahunAngkatan = String.valueOf(cbangkatan.getSelectedItem());
 
         String sql = "";
         
@@ -546,11 +582,21 @@ private void tampilData(String filter){
         }
     }//GEN-LAST:event_simpanActionPerformed
 
+    private void cbjurusanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbjurusanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbjurusanActionPerformed
+
+    private void cbangkatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbangkatanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbangkatanActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Cari;
     private javax.swing.JTextField Cari1;
     private javax.swing.JTextField akun_id;
+    private javax.swing.JComboBox<String> cbangkatan;
+    private javax.swing.JComboBox<String> cbjurusan;
     private javax.swing.JDialog dialogForm;
     private javax.swing.JButton hapus;
     private javax.swing.JButton hapus1;
@@ -568,13 +614,11 @@ private void tampilData(String filter){
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jumlah;
-    private javax.swing.JTextField jurusan;
     private javax.swing.JTextField nama_biaya;
     private javax.swing.JButton simpan;
     private javax.swing.JTextField smt;
     private javax.swing.JTable tabelData;
     private javax.swing.JTable tabelData1;
-    private javax.swing.JTextField tahun_angkatan;
     private javax.swing.JButton tambah;
     private javax.swing.JButton tambah1;
     private javax.swing.JButton ubah;
