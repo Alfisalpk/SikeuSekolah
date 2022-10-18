@@ -44,11 +44,11 @@ String mode;
     
     public void cbjurusan(){
      try{
-         String sql="select * from jurusan";
+         String sql="select * from jurusan order by nama_jurusan";
          rs = kon.perintah.executeQuery(sql);
          cbjurusan.addItem("-Pilih Jurusan-");
          while (rs.next()) {
-             cbjurusan.addItem(rs.getString("nama_jurusan"));
+             cbjurusan.addItem(rs.getString("id"));
          }
         }catch(Exception e){
             System.err.println("Gagal Tampil data: "+e.getMessage());
@@ -76,7 +76,7 @@ private void tampilData(String filter){
     tabelData.setModel(modelAkun);
     
     try{
-        String sql = "select * from siswa where id like '%"+filter+"' or nis like '%"+filter+"%' ";
+        String sql = "select siswa.id, nis, nama, angkatan, nama_jurusan, kelas, no_hp,du, password, status from siswa INNER JOIN jurusan on siswa.jurusan=jurusan.id where nis;";
         rs = kon.perintah.executeQuery(sql);
         int no = 0;
         while (rs.next()){
@@ -85,7 +85,7 @@ private void tampilData(String filter){
             String txtNis = rs.getString("nis");
             String txtNama = rs.getString("nama");
             String txtAngkatan = rs.getString("angkatan");
-            String txtJurusan = rs.getString("jurusan");
+            String txtJurusan = rs.getString("nama_jurusan");
             String txtKelas= rs.getString("Kelas");
             String txtNohp = rs.getString("no_hp");
             String txtDu = rs.getString("du");
@@ -122,13 +122,13 @@ private void tampilData(String filter){
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         du = new javax.swing.JTextField();
-        status = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         password = new javax.swing.JPasswordField();
         cbangkatan = new javax.swing.JComboBox<>();
         cbjurusan = new javax.swing.JComboBox<>();
         cbkelas = new javax.swing.JComboBox<>();
+        status = new javax.swing.JComboBox<>();
         tambah = new javax.swing.JButton();
         ubah = new javax.swing.JButton();
         hapus = new javax.swing.JButton();
@@ -184,6 +184,8 @@ private void tampilData(String filter){
 
         jLabel12.setText("Status");
 
+        status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aktif", "Tidak Aktif" }));
+
         javax.swing.GroupLayout dialogFormLayout = new javax.swing.GroupLayout(dialogForm.getContentPane());
         dialogForm.getContentPane().setLayout(dialogFormLayout);
         dialogFormLayout.setHorizontalGroup(
@@ -221,12 +223,11 @@ private void tampilData(String filter){
                                         .addGap(18, 18, 18)
                                         .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                        .addComponent(password, javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(nohp, javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(status, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE))
-                                                    .addComponent(du, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                    .addComponent(password, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                                                    .addComponent(nohp, javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(du, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                                                    .addComponent(status, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                                 .addComponent(cbkelas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addComponent(cbangkatan, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                         .addGap(0, 80, Short.MAX_VALUE))
@@ -279,8 +280,8 @@ private void tampilData(String filter){
                     .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
+                    .addComponent(jLabel12)
+                    .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -468,10 +469,10 @@ private void tampilData(String filter){
         String txtAngkatan = String.valueOf(cbangkatan.getSelectedItem());
         String txtJurusan =  String.valueOf(cbjurusan.getSelectedItem());
         String txtKelas =  String.valueOf(cbkelas.getSelectedItem());
+        String txtStatus =  String.valueOf(status.getSelectedItem());
         String txtNohp = nohp.getText();
         String txtDu = du.getText();
         String txtPassword = password.getText();
-        String txtStatus = status.getText();
         String sql= "";
 
         LocalDateTime now = LocalDateTime.now();
@@ -530,9 +531,9 @@ private void tampilData(String filter){
         nohp.setText(null);
         password.setText(null);
         du.setText(null);
-        status.setText(null);
+        status.setSelectedItem(null);
         id.setEnabled(true);
-        dialogForm.setTitle("Form Jurusan - Tambah");
+        dialogForm.setTitle("Form Siswa - Tambah");
         dialogForm.pack();
         dialogForm.setLocationRelativeTo(null);
         dialogForm.setLocationRelativeTo(null);
@@ -569,7 +570,7 @@ private void tampilData(String filter){
                     nohp.setText(txtNohp);
                     password.setText(txtDu);
                     du.setText(txtPassword);
-                    status.setText(txtStatus);
+                    status.setSelectedItem(txtStatus);
 
                     id.setEnabled(false);
                     dialogForm.setTitle("Form Jurusan - Ubah");
@@ -667,7 +668,7 @@ private void tampilData(String filter){
     private javax.swing.JTextField nohp;
     private javax.swing.JPasswordField password;
     private javax.swing.JButton simpan;
-    private javax.swing.JTextField status;
+    private javax.swing.JComboBox<String> status;
     private javax.swing.JTable tabelData;
     private javax.swing.JTable tabelData1;
     private javax.swing.JButton tambah;

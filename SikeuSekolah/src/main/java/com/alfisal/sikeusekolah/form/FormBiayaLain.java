@@ -47,7 +47,7 @@ String mode;
          rs = kon.perintah.executeQuery(sql);
          cbakun_id.addItem("-Pilih Jurusan-");
          while (rs.next()) {
-             cbakun_id.addItem(rs.getString("id"));
+             cbakun_id.addItem(rs.getString("akun_id"));
          }
         }catch(Exception e){
             System.err.println("Gagal Tampil data: "+e.getMessage());
@@ -102,12 +102,12 @@ private void tampilData(String filter){
         jLabel5 = new javax.swing.JLabel();
         nama_biaya = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        status = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jumlah = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         cbakun_id = new javax.swing.JComboBox<>();
         cbjurusan = new javax.swing.JComboBox<>();
+        status = new javax.swing.JComboBox<>();
         tambah = new javax.swing.JButton();
         ubah = new javax.swing.JButton();
         hapus = new javax.swing.JButton();
@@ -167,6 +167,8 @@ private void tampilData(String filter){
             }
         });
 
+        status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aktif ", "Tidak Aktif" }));
+
         javax.swing.GroupLayout dialogFormLayout = new javax.swing.GroupLayout(dialogForm.getContentPane());
         dialogForm.getContentPane().setLayout(dialogFormLayout);
         dialogFormLayout.setHorizontalGroup(
@@ -185,11 +187,11 @@ private void tampilData(String filter){
                         .addGap(18, 18, 18)
                         .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(id)
-                            .addComponent(status, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
                             .addComponent(jumlah)
                             .addComponent(nama_biaya, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cbakun_id, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbjurusan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(cbakun_id, 0, 182, Short.MAX_VALUE)
+                            .addComponent(cbjurusan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(status, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 69, Short.MAX_VALUE))
                     .addComponent(simpan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -226,8 +228,8 @@ private void tampilData(String filter){
                         .addComponent(jumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(dialogFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))))
+                            .addComponent(jLabel8)
+                            .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(46, 46, 46)
                 .addComponent(simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(27, Short.MAX_VALUE))
@@ -412,9 +414,10 @@ private void tampilData(String filter){
         String txtId = id.getText();
         String txtJurusan = String.valueOf(cbjurusan.getSelectedItem());
        String txtAkun_id = String.valueOf(cbakun_id.getSelectedItem());
+       String txtStatus = String.valueOf(status.getSelectedItem());
         String txtNama_biaya = nama_biaya.getText();
         String txtJumlah = jumlah.getText();
-        String txtStatus= status.getText();
+        
         
         
         String sql= "";
@@ -464,7 +467,7 @@ private void tampilData(String filter){
         cbakun_id.setSelectedItem(null);
         nama_biaya.setText(null);
         jumlah.setText(null);
-        status.setText(null);
+        status.setSelectedItem(null);
         
         
         id.setEnabled(true);
@@ -499,12 +502,12 @@ private void tampilData(String filter){
                     cbjurusan.setSelectedItem(txtJurusan);
                     nama_biaya.setText(txtNama_biaya);
                     jumlah.setText(txtJumlah);
-                    status.setText(txtStatus);
+                    status.setSelectedItem(txtStatus);
                     
                     
 
                     id.setEnabled(false);
-                    dialogForm.setTitle("Form Biaya PMB - Ubah");
+                    dialogForm.setTitle("Form Biaya Lain - Ubah");
                     dialogForm.pack();
                     dialogForm.setLocationRelativeTo(null);
                     dialogForm.setVisible(true);
@@ -599,7 +602,7 @@ private void tampilData(String filter){
     private javax.swing.JTextField jumlah;
     private javax.swing.JTextField nama_biaya;
     private javax.swing.JButton simpan;
-    private javax.swing.JTextField status;
+    private javax.swing.JComboBox<String> status;
     private javax.swing.JTable tabelData;
     private javax.swing.JTable tabelData1;
     private javax.swing.JButton tambah;

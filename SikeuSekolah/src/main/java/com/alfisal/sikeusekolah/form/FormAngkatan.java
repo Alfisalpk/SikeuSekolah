@@ -223,7 +223,7 @@ String mode;
                     String txtTahun =rs.getString("tahun");                   
                     tahun.setText(txtTahun);
 
-                    tahun.setEnabled(false);
+                    tahun.setEnabled(true);
                     dialogForm.setTitle("Form Tahun - Ubah");
                     dialogForm.pack();
                     dialogForm.setLocationRelativeTo(null);

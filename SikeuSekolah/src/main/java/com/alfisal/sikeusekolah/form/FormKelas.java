@@ -52,10 +52,11 @@ private void tampilData(String filter){
 
 public void cbjurusan(){
      try{
-         String sql="select * from jurusan";
+         String sql="select * from jurusan order by nama_jurusan";
          rs = kon.perintah.executeQuery(sql);
          cbjurusan.addItem("-Pilih Jurusan-");
          while (rs.next()) {
+            
              cbjurusan.addItem(rs.getString("id"));
          }
         }catch(Exception e){
