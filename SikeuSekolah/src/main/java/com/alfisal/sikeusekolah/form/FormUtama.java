@@ -47,6 +47,7 @@ public class FormUtama extends javax.swing.JFrame {
         menuMaterBiayaTetap = new javax.swing.JMenuItem();
         menuMaterBiayaPmb = new javax.swing.JMenuItem();
         menuMaterBiayaLain = new javax.swing.JMenuItem();
+        menuMaterTransaksiPembayaran = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         contentMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
@@ -150,6 +151,14 @@ public class FormUtama extends javax.swing.JFrame {
             }
         });
         menuMaster.add(menuMaterBiayaLain);
+
+        menuMaterTransaksiPembayaran.setText("Transaksi Pembayaran");
+        menuMaterTransaksiPembayaran.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuMaterTransaksiPembayaranActionPerformed(evt);
+            }
+        });
+        menuMaster.add(menuMaterTransaksiPembayaran);
 
         menuBar.add(menuMaster);
 
@@ -265,6 +274,15 @@ public class FormUtama extends javax.swing.JFrame {
         formBiayaLain.setVisible(true);
     }//GEN-LAST:event_menuMaterBiayaLainActionPerformed
 
+    private void menuMaterTransaksiPembayaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMaterTransaksiPembayaranActionPerformed
+        // TODO add your handling code here:
+           desktopPane.removeAll();
+        desktopPane.repaint();
+        FormPembayaran formPembayaran=new FormPembayaran();
+        desktopPane.add(formPembayaran);
+        formPembayaran.setVisible(true);
+    }//GEN-LAST:event_menuMaterTransaksiPembayaranActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -317,6 +335,7 @@ public class FormUtama extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuMaterJurusan;
     private javax.swing.JMenuItem menuMaterKelas;
     private javax.swing.JMenuItem menuMaterSiswa;
+    private javax.swing.JMenuItem menuMaterTransaksiPembayaran;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
